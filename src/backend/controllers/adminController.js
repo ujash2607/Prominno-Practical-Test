@@ -25,7 +25,7 @@ const adminAndSellerLogin = async (req, res) => {
           }
 
           const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
-          return res.status(200).send({ success: true, message: `User ${user.role} login successfully`, token: token });
+          return res.status(200).send({ success: true, role: user.role, message: `User ${user.role} login successfully`, token: token });
      } catch (error) {
           console.log(error, 'Error while admin login');
           return res.status(400).send({ sucess: false, message: "Error while admin login", error: error.message });
