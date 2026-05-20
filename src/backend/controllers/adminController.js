@@ -48,6 +48,18 @@ const createSeller = async (req, res) => {
                });
           }
 
+          const existSellerMobile = await pool.query(
+               'SELECT * FROM users WHERE mobile = $1',
+               [mobile]
+          );
+
+          if (existSellerMobile.rows.length > 0) {
+               return res.status(400).send({
+                    success: false,
+                    message: 'Mobile Number already exists',
+               });
+          }
+
           const hashedPassword = await bcrypt.hash(password, 10);
 
           const query = `
